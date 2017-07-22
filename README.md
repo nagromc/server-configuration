@@ -7,7 +7,14 @@ Self-hosting configuration
     openssl req -nodes -x509 -newkey rsa:4096 -keyout certs/localhost.key -out certs/localhost.crt -days 365
     ```
 
-2. Run docker-conpose
+2. Edit environment variables
+
+    ```
+    cp .env.template .env
+    vim .env
+    ```
+
+3. Run docker-conpose
 
     ```
     docker-compose up

@@ -14,14 +14,14 @@ services:
         image: jwilder/whoami
         container_name: whoami
         environment:
-            - VIRTUAL_HOST=whoami.localhost
+            - VIRTUAL_HOST=whoami.${DOMAIN}
             - HTTPS_METHOD=noredirect
 
     keeweb:
         image: antelle/keeweb
         container_name: keeweb
         environment:
-            - VIRTUAL_HOST=keeweb.localhost
+            - VIRTUAL_HOST=keeweb.${DOMAIN}
             - VIRTUAL_PORT=443
             - VIRTUAL_PROTO=https
             # uncomment to allow http
