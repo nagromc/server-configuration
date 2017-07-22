@@ -1,0 +1,18 @@
+version: '2'
+services:
+    nginx-proxy:
+        image: jwilder/nginx-proxy:alpine-0.6.0
+        container_name: nginx-proxy
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - /home/morgan/dev/docker-conf/certs:/etc/nginx/certs
+
+    whoami:
+        image: jwilder/whoami
+        container_name: whoami
+        environment:
+            - VIRTUAL_HOST=whoami.localhost
+            - HTTPS_METHOD=noredirect
