@@ -44,3 +44,16 @@ services:
             - LETSENCRYPT_HOST=keeweb.${DOMAIN}
             - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
             - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
+
+    selfoss:
+        image: jenserat/selfoss
+        container_name: selfoss
+        volumes:
+            - /srv/selfoss:/var/www/html/data
+        environment:
+            - VIRTUAL_HOST=rss.${DOMAIN}
+            # uncomment to allow http
+            # - HTTPS_METHOD=noredirect
+            - LETSENCRYPT_HOST=rss.${DOMAIN}
+            - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
+            - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
