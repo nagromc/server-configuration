@@ -16,3 +16,13 @@ services:
         environment:
             - VIRTUAL_HOST=whoami.localhost
             - HTTPS_METHOD=noredirect
+
+    keeweb:
+        image: antelle/keeweb
+        container_name: keeweb
+        environment:
+            - VIRTUAL_HOST=keeweb.localhost
+            - VIRTUAL_PORT=443
+            - VIRTUAL_PROTO=https
+            # uncomment to allow http
+            # - HTTPS_METHOD=noredirect
