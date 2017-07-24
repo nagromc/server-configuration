@@ -45,6 +45,19 @@ services:
             - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
             - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
 
+    keeweb-webdav:
+        build: ./keeweb-webdav
+        container_name: keeweb-webdav
+        volumes:
+            - ./keeweb-webdav/httpd-dav.conf:/usr/local/apache2/conf/extra/httpd-dav.conf:ro
+        environment:
+            - VIRTUAL_HOST=webdav.keeweb.${DOMAIN}
+            # uncomment to allow http
+            # - HTTPS_METHOD=noredirect
+            - LETSENCRYPT_HOST=webdav.keeweb.${DOMAIN}
+            - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
+            - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
+
     selfoss:
         image: jenserat/selfoss
         container_name: selfoss
