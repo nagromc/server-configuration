@@ -50,6 +50,7 @@ services:
         container_name: keeweb-webdav
         volumes:
             - ./keeweb-webdav/httpd-dav.conf:/usr/local/apache2/conf/extra/httpd-dav.conf:ro
+            - ./keeweb-webdav/user.passwd:/var/local/apache2/user.passwd:ro
         environment:
             - VIRTUAL_HOST=webdav.keeweb.${DOMAIN}
             # uncomment to allow http

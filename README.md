@@ -15,7 +15,19 @@ Self-hosting configuration
     vim .env
     ```
 
-3. Run docker-conpose
+3. Generate `keeweb-webdav/user.passwd`
+
+    You may need to install `apache2-utils`
+
+    ```
+    apt install apache2-utils
+    ```
+
+    ```
+    htdigest -c "keeweb-webdav/user.passwd" keeweb-webdav morgan
+    ```
+
+4. Run docker-compose
 
     ```
     docker-compose up

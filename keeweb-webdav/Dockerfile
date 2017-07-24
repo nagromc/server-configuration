@@ -10,4 +10,5 @@ RUN sed -i 's|^#\(LoadModule auth_digest_module \)|\1|g' /usr/local/apache2/conf
     mkdir -p /var/run/lock/apache2 && \
     chown daemon:daemon /var/run/lock/apache2 && \
     mkdir -p /var/www && \
-    chown daemon:daemon /var/www
+    chown daemon:daemon /var/www && \
+    mkdir -p /var/local/apache2
