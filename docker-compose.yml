@@ -12,6 +12,7 @@ services:
             - ${NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
             - ${NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
             - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html
+            - ./nginx-proxy/redirect.conf:/etc/nginx/conf.d/redirect.conf:ro
         labels:
             com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
 
@@ -35,6 +36,8 @@ services:
     keeweb:
         image: antelle/keeweb
         container_name: keeweb
+        volumes:
+            - ./keeweb/config.json:/keeweb/config.json:ro
         environment:
             - VIRTUAL_HOST=keeweb.${DOMAIN}
             - VIRTUAL_PORT=443
