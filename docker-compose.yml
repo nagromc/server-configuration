@@ -26,13 +26,6 @@ services:
             - ${NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
             - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html
 
-    whoami:
-        image: jwilder/whoami
-        container_name: whoami
-        environment:
-            - VIRTUAL_HOST=whoami.${DOMAIN}
-            - HTTPS_METHOD=noredirect
-
     keeweb:
         image: antelle/keeweb
         container_name: keeweb
