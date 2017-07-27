@@ -1,0 +1,11 @@
+version: '2'
+services:
+    nginx-letsencrypt:
+        image: jrcs/letsencrypt-nginx-proxy-companion
+        container_name: nginx-letsencrypt
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ${NGINX_FILES_PATH}/certs:/etc/nginx/certs:rw
+            - ${NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
+            - ${NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
+            - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html

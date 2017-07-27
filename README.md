@@ -1,6 +1,35 @@
 Self-hosting configuration
 ==========================
 
+## Production
+
+1. Edit environment variables
+
+    ```
+    cp .env.template .env
+    vim .env
+    ```
+
+2. Generate `keeweb-webdav/user.passwd`
+
+    You may need to install `apache2-utils`
+
+    ```
+    apt install apache2-utils
+    ```
+
+    ```
+    htdigest -c "keeweb-webdav/user.passwd" keeweb-webdav morgan
+    ```
+
+3. Run docker-compose
+
+    ```
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+    ```
+
+## Development
+
 1. Create self-signed certificate
 
     ```
