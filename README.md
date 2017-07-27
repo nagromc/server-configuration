@@ -33,7 +33,7 @@ Self-hosting configuration
 
     ```
     mkdir -p nginx-proxy/nginx-proxy-files/certs
-    openssl req -nodes -x509 -newkey rsa:4096 -keyout nginx-proxy/nginx-proxy-files/certs/localhost.key -out nginx-proxy/nginx-proxy-files/certs/localhost.crt -days 365
+    openssl req -nodes -x509 -newkey rsa:4096 -keyout nginx-proxy/nginx-proxy-files/certs/localhost.key -out nginx-proxy/nginx-proxy-files/certs/localhost.crt
     ```
 
 2. Generate `keeweb-webdav/user.passwd`
