@@ -6,7 +6,7 @@ Self-hosting configuration
 1. Edit environment variables
 
     ```
-    cp prod.env.template prod.env && vim prod.env
+    vim prod.env
     ```
 
 2. Generate `keeweb-webdav/user.passwd`
@@ -24,7 +24,7 @@ Self-hosting configuration
 3. Run docker-compose
 
     ```
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+    ./docker-compose-env.sh -f docker-compose.yml -f docker-compose.prod.yml up
     ```
 
 ## Development
@@ -51,5 +51,5 @@ Self-hosting configuration
 3. Run docker-compose
 
     ```
-    docker-compose up
+    ./docker-compose-env.sh up
     ```
