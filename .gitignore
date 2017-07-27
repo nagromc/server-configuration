@@ -1,3 +1,3 @@
-.env
-nginx-proxy/nginx-proxy-files/
 keeweb-webdav/user.passwd
+nginx-proxy/nginx-proxy-files/
+prod.env

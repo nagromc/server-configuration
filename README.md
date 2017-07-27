@@ -6,8 +6,7 @@ Self-hosting configuration
 1. Edit environment variables
 
     ```
-    cp .env.template .env
-    vim .env
+    cp prod.env.template prod.env && vim prod.env
     ```
 
 2. Generate `keeweb-webdav/user.passwd`
@@ -37,14 +36,7 @@ Self-hosting configuration
     openssl req -nodes -x509 -newkey rsa:4096 -keyout nginx-proxy/nginx-proxy-files/certs/localhost.key -out nginx-proxy/nginx-proxy-files/certs/localhost.crt -days 365
     ```
 
-2. Edit environment variables
-
-    ```
-    cp .env.template .env
-    vim .env
-    ```
-
-3. Generate `keeweb-webdav/user.passwd`
+2. Generate `keeweb-webdav/user.passwd`
 
     You may need to install `apache2-utils`
 
@@ -56,7 +48,7 @@ Self-hosting configuration
     htdigest -c "keeweb-webdav/user.passwd" keeweb-webdav morgan
     ```
 
-4. Run docker-compose
+3. Run docker-compose
 
     ```
     docker-compose up

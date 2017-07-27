@@ -13,6 +13,7 @@ services:
             - ${NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
             - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html
             - ./nginx-proxy/redirect.conf:/etc/nginx/conf.d/redirect.conf:ro
+        env_file: prod.env
         labels:
             com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
 
@@ -28,8 +29,7 @@ services:
             # uncomment to allow http
             # - HTTPS_METHOD=noredirect
             - LETSENCRYPT_HOST=keeweb.${DOMAIN}
-            - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
-            - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
+        env_file: prod.env
 
     keeweb-webdav:
         build: ./keeweb-webdav
@@ -42,8 +42,7 @@ services:
             # uncomment to allow http
             # - HTTPS_METHOD=noredirect
             - LETSENCRYPT_HOST=webdav.keeweb.${DOMAIN}
-            - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
-            - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
+        env_file: prod.env
 
     selfoss:
         image: jenserat/selfoss
@@ -55,5 +54,4 @@ services:
             # uncomment to allow http
             # - HTTPS_METHOD=noredirect
             - LETSENCRYPT_HOST=rss.${DOMAIN}
-            - LETSENCRYPT_TEST=${DOCKER_LETSENCRYPT_TEST}
-            - LETSENCRYPT_EMAIL=${DOCKER_LETSENCRYPT_EMAIL}
+        env_file: prod.env
