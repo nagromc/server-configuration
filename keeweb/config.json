@@ -1,2 +1,15 @@
 {
+  "settings": {
+    "webdav": true,
+    "webdavSaveMethod": "put"
+  },
+  "files": [{
+    "storage": "webdav",
+    "name": "KDBX on WebDAV",
+    "path": "",
+    "options": {
+      "user": "",
+      "password": ""
+    }
+  }]
 }

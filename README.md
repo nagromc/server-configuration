@@ -18,7 +18,7 @@ Self-hosting configuration
     ```
 
     ```
-    htdigest -c "keeweb-webdav/user.passwd" keeweb-webdav morgan
+    htpasswd -c -B "keeweb-webdav/user.passwd" <user>
     ```
 
 3. Run docker-compose
@@ -45,7 +45,7 @@ Self-hosting configuration
     ```
 
     ```
-    htdigest -c "keeweb-webdav/user.passwd" keeweb-webdav morgan
+    htpasswd -c -B "keeweb-webdav/user.passwd" <user>
     ```
 
 3. Run docker-compose
