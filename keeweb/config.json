@@ -1,5 +1,12 @@
 {
   "settings": {
+    "canCreate": false,
+    "canOpen": false,
+    "canOpenDemo": false,
+    "canImportXml": false,
+    "dropbox": false,
+    "gdrive": false,
+    "onedrive": false,
     "webdav": true,
     "webdavSaveMethod": "put"
   },
