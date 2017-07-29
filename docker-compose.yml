@@ -36,6 +36,7 @@ services:
         volumes:
             - ./keeweb-webdav/httpd-dav.conf:/usr/local/apache2/conf/extra/httpd-dav.conf:ro
             - ./keeweb-webdav/user.passwd:/var/local/apache2/user.passwd:ro
+            - keeweb-webdav-volume:/var/www/${DCP_ENV_KEEWEB_DB_NAME}:rw
         environment:
             - VIRTUAL_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
@@ -52,3 +53,15 @@ services:
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=rss.${DCP_ENV_DOMAIN}
         env_file: prod.env
+
+    backup:
+        build: ./backup
+        ports:
+            - "10022:22"
+        container_name: backup
+        volumes:
+            - ./backup/backup.sh:/etc/periodic/daily/backup:ro
+            - keeweb-webdav-volume:/tmp/keeweb-webdav/:ro
+
+volumes:
+    keeweb-webdav-volume:
