@@ -8,10 +8,10 @@ services:
             - "443:443"
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
-            - ${NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
-            - ${NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
-            - ${NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
-            - ${NGINX_FILES_PATH}/html:/usr/share/nginx/html
+            - ${DCP_ENV_NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
+            - ${DCP_ENV_NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
+            - ${DCP_ENV_NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
+            - ${DCP_ENV_NGINX_FILES_PATH}/html:/usr/share/nginx/html
             - ./nginx-proxy/redirect.conf:/etc/nginx/conf.d/redirect.conf:ro
         env_file: prod.env
         labels:
@@ -23,11 +23,11 @@ services:
         volumes:
             - ./keeweb/config.json:/keeweb/config.json:ro
         environment:
-            - VIRTUAL_HOST=keeweb.${DOMAIN}
+            - VIRTUAL_HOST=keeweb.${DCP_ENV_DOMAIN}
             - VIRTUAL_PORT=443
             - VIRTUAL_PROTO=https
-            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=keeweb.${DOMAIN}
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=keeweb.${DCP_ENV_DOMAIN}
         env_file: prod.env
 
     keeweb-webdav:
@@ -37,9 +37,9 @@ services:
             - ./keeweb-webdav/httpd-dav.conf:/usr/local/apache2/conf/extra/httpd-dav.conf:ro
             - ./keeweb-webdav/user.passwd:/var/local/apache2/user.passwd:ro
         environment:
-            - VIRTUAL_HOST=webdav.keeweb.${DOMAIN}
-            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=webdav.keeweb.${DOMAIN}
+            - VIRTUAL_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
         env_file: prod.env
 
     selfoss:
@@ -48,7 +48,7 @@ services:
         volumes:
             - /srv/selfoss:/var/www/html/data
         environment:
-            - VIRTUAL_HOST=rss.${DOMAIN}
-            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=rss.${DOMAIN}
+            - VIRTUAL_HOST=rss.${DCP_ENV_DOMAIN}
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=rss.${DCP_ENV_DOMAIN}
         env_file: prod.env
