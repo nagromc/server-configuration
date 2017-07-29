@@ -26,8 +26,7 @@ services:
             - VIRTUAL_HOST=keeweb.${DOMAIN}
             - VIRTUAL_PORT=443
             - VIRTUAL_PROTO=https
-            # uncomment to allow http
-            # - HTTPS_METHOD=noredirect
+            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
             - LETSENCRYPT_HOST=keeweb.${DOMAIN}
         env_file: prod.env
 
@@ -39,8 +38,7 @@ services:
             - ./keeweb-webdav/user.passwd:/var/local/apache2/user.passwd:ro
         environment:
             - VIRTUAL_HOST=webdav.keeweb.${DOMAIN}
-            # uncomment to allow http
-            # - HTTPS_METHOD=noredirect
+            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
             - LETSENCRYPT_HOST=webdav.keeweb.${DOMAIN}
         env_file: prod.env
 
@@ -51,7 +49,6 @@ services:
             - /srv/selfoss:/var/www/html/data
         environment:
             - VIRTUAL_HOST=rss.${DOMAIN}
-            # uncomment to allow http
-            # - HTTPS_METHOD=noredirect
+            - HTTPS_METHOD=${DCP_HTTPS_METHOD}
             - LETSENCRYPT_HOST=rss.${DOMAIN}
         env_file: prod.env
