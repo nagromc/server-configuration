@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 RUN apk update \
-    && apk add openssh openssl \
+    && apk add borgbackup openssh openssl \
     && rm  -rf /tmp/* /var/cache/apk/*
 
 ADD https://raw.githubusercontent.com/nagromc/dotfiles/master/ssh/authorized_keys /root/.ssh/authorized_keys
