@@ -51,5 +51,5 @@ Self-hosting configuration
 3. Run docker-compose
 
     ```
-    ./docker-compose-env.sh up
+    ./docker-compose-env.sh up --force-recreate --build
     ```
