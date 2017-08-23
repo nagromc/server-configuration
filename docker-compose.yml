@@ -17,6 +17,20 @@ services:
         labels:
             com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
 
+    gogs:
+        image: gogs/gogs
+        container_name: gogs
+        ports:
+            - "10023:22"
+        volumes:
+            - gogs-volume:/data
+        environment:
+            - VIRTUAL_HOST=git.${DCP_ENV_DOMAIN}
+            - VIRTUAL_PORT=3000
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=git.${DCP_ENV_DOMAIN}
+        env_file: prod.env
+
     keeweb:
         image: antelle/keeweb
         container_name: keeweb
@@ -67,4 +81,5 @@ services:
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
 
 volumes:
+    gogs-volume:
     keeweb-webdav-volume:
