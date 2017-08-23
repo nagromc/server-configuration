@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
-touch /tmp/foo
+echo "Saving in $LOCAL_BACKUP_REPO..."
+echo "Saving in $REMOTE_BACKUP_REPO..."
