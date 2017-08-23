@@ -13,10 +13,10 @@
   "files": [{
     "storage": "webdav",
     "name": "KDBX on WebDAV",
-    "path": "https://webdav.keeweb.localhost/keyfile",
+    "path": "",
     "options": {
-      "user": "morgan",
-      "password": "test"
+      "user": "",
+      "password": ""
     }
   }]
 }

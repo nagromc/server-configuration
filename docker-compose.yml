@@ -21,7 +21,7 @@ services:
         image: antelle/keeweb
         container_name: keeweb
         volumes:
-            - ./keeweb/config.json:/keeweb/config.json:ro
+            - ${DCP_ENV_KEEWEB_CONFIG_PATH}:/keeweb/config.json:ro
         environment:
             - VIRTUAL_HOST=keeweb.${DCP_ENV_DOMAIN}
             - VIRTUAL_PORT=443
