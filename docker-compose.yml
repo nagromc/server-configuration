@@ -24,6 +24,7 @@ services:
             - "10023:22"
         volumes:
             - gogs-volume:/data
+            - ${DCP_ENV_GOGS_CONFIG_PATH}:/data/gogs/conf/app.ini
         environment:
             - VIRTUAL_HOST=git.${DCP_ENV_DOMAIN}
             - VIRTUAL_PORT=3000
