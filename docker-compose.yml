@@ -76,7 +76,7 @@ services:
         container_name: backup
         volumes:
             - ./backup/backup.sh:/etc/periodic/daily/backup:ro
-            - keeweb-webdav-volume:/tmp/keeweb-webdav/:ro
+            - keeweb-webdav-volume:/srv/backup/keeweb-webdav/:ro
         environment:
             - DCK_LOCAL_BACKUP_REPO=/srv/backup
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
