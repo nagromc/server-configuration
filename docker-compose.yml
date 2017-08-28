@@ -1,11 +1,27 @@
 version: '3.3'
 services:
+    sslh:
+        build: ./sslh
+        ports:
+            - "443:443"
+        container_name: sslh
+        environment:
+            - HOST_LISTEN=0.0.0.0
+            - PORT_LISTEN=443
+            - SSH_HOST_FORWARD=dockerhost
+            - SSH_PORT_FORWARD=${DCP_ENV_HOST_SSHD_PORT}
+            - SSL_HOST_FORWARD=dockerhost
+            - SSL_PORT_FORWARD=${DCP_ENV_NGINX_HTTPS_PORT}
+        extra_hosts:
+            - "dockerhost:${DCP_ENV_HOST_IP_ADDR}"
+        env_file: prod.env
+
     nginx-proxy:
         image: jwilder/nginx-proxy:alpine-0.6.0
         container_name: nginx-proxy
         ports:
             - "80:80"
-            - "443:443"
+            - "${DCP_ENV_NGINX_HTTPS_PORT}:443"
         volumes:
             - /var/run/docker.sock:/tmp/docker.sock:ro
             - ${DCP_ENV_NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
