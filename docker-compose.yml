@@ -74,6 +74,22 @@ services:
             - LETSENCRYPT_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
         env_file: prod.env
 
+    netdata:
+        image: firehol/netdata
+        container_name: netdata
+        ports:
+            - "19999:19999"
+        volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+        cap_add:
+            - SYS_PTRACE
+        environment:
+            - VIRTUAL_HOST=netdata.${DCP_ENV_DOMAIN}
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=netdata.${DCP_ENV_DOMAIN}
+        env_file: prod.env
+
     selfoss:
         image: jenserat/selfoss
         container_name: selfoss
