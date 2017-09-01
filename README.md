@@ -29,14 +29,19 @@ Self-hosting configuration
 
 ## Development
 
-1. Create self-signed certificate
+1. Create the required directories
 
     ```
-    mkdir -p nginx-proxy/nginx-proxy-files/certs
-    openssl req -nodes -x509 -newkey rsa:4096 -keyout nginx-proxy/nginx-proxy-files/certs/localhost.key -out nginx-proxy/nginx-proxy-files/certs/localhost.crt
+    mkdir -p nginx-proxy/nginx-proxy-files/{certs,conf.d,dhparam}
     ```
 
-2. Generate `keeweb-webdav/user.passwd`
+2. Create self-signed certificate
+
+    ```
+    openssl req -nodes -x509 -newkey rsa:1024 -keyout nginx-proxy/nginx-proxy-files/certs/localhost.key -out nginx-proxy/nginx-proxy-files/certs/localhost.crt && openssl dhparam -out nginx-proxy/nginx-proxy-files/dhparam/dhparam.pem 1024
+    ```
+
+3. Generate `keeweb-webdav/user.passwd`
 
     You may need to install `apache2-utils`
 
@@ -48,7 +53,7 @@ Self-hosting configuration
     htpasswd -c -B "keeweb-webdav/user.passwd" <user>
     ```
 
-3. Run docker-compose
+4. Run docker-compose
 
     ```
     ./docker-compose-env.sh up --force-recreate --build

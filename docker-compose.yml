@@ -27,6 +27,7 @@ services:
             - ${DCP_ENV_NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
             - ${DCP_ENV_NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
             - ${DCP_ENV_NGINX_FILES_PATH}/html:/usr/share/nginx/html
+            - ${DCP_ENV_NGINX_FILES_PATH}/dhparam/dhparam.pem:/etc/nginx/dhparam/dhparam.pem
             - ./nginx-proxy/redirect.conf:/etc/nginx/conf.d/redirect.conf:ro
         env_file: prod.env
         labels:
@@ -38,9 +39,7 @@ services:
         container_name: nginx-proxy-gen
         volumes:
             - ${DCP_ENV_NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
-            - ${DCP_ENV_NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
             - ${DCP_ENV_NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
-            - ${DCP_ENV_NGINX_FILES_PATH}/html:/usr/share/nginx/html
             - ./nginx-proxy/bin/nginx-proxy/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
