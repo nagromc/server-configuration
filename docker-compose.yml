@@ -40,6 +40,8 @@ services:
         volumes:
             - ${DCP_ENV_NGINX_FILES_PATH}/certs:/etc/nginx/certs:ro
             - ${DCP_ENV_NGINX_FILES_PATH}/conf.d:/etc/nginx/conf.d
+            - ${DCP_ENV_NGINX_FILES_PATH}/vhost.d:/etc/nginx/vhost.d
+            - ${DCP_ENV_NGINX_FILES_PATH}/html:/usr/share/nginx/html
             - ./nginx-proxy/bin/nginx-proxy/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
             - /var/run/docker.sock:/tmp/docker.sock:ro
         depends_on:
@@ -60,6 +62,8 @@ services:
             - VIRTUAL_PORT=3000
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=git.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
 
     keeweb:
@@ -73,6 +77,8 @@ services:
             - VIRTUAL_PROTO=https
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=keeweb.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
 
     keeweb-webdav:
@@ -86,6 +92,8 @@ services:
             - VIRTUAL_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
 
     netdata:
@@ -102,6 +110,8 @@ services:
             - VIRTUAL_HOST=netdata.${DCP_ENV_DOMAIN}
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=netdata.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
 
     piwik:
@@ -111,6 +121,8 @@ services:
             - VIRTUAL_HOST=piwik.${DCP_ENV_DOMAIN}
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=piwik.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         links:
             - piwik-database:db
         env_file: prod.env
@@ -133,6 +145,8 @@ services:
             - VIRTUAL_HOST=rss.${DCP_ENV_DOMAIN}
             - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
             - LETSENCRYPT_HOST=rss.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
 
     backup:
