@@ -21,7 +21,17 @@ Self-hosting configuration
     htpasswd -c -B "keeweb-webdav/user.passwd" <user>
     ```
 
-3. Run docker-compose
+3. Configure the mail server
+
+    ```
+    docker run --rm \
+      -e MAIL_USER=user1@domain.tld \
+      -e MAIL_PASS=mypassword \
+      -ti tvial/docker-mailserver:latest \
+      /bin/sh -c 'echo "$MAIL_USER|$(doveadm pw -s SHA512-CRYPT -u $MAIL_USER -p $MAIL_PASS)"' >> mailserver/config/postfix-accounts.cf
+    ```
+
+4. Run docker-compose
 
     ```
     ./docker-compose-env.sh -f docker-compose.yml -f docker-compose.prod.yml up

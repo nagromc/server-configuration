@@ -49,6 +49,26 @@ services:
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen"
 
+    mail:
+        image: tvial/docker-mailserver:latest
+        ports:
+            # SMTP
+            - "25:25"
+            # SMTP (MSA)
+            - "587:587"
+        container_name: mail
+        hostname: mail
+        domainname: ${DCP_ENV_DOMAIN}
+        volumes:
+            - maildata:/var/mail
+            - mailstate:/var/mail-state
+            - ./mailserver/config:/tmp/docker-mailserver/
+        environment:
+            - ENABLE_SPAMASSASSIN=1
+            - ENABLE_FAIL2BAN=1
+        cap_add:
+            - NET_ADMIN
+
     gogs:
         image: gogs/gogs
         container_name: gogs
@@ -166,4 +186,6 @@ services:
 volumes:
     gogs-volume:
     keeweb-webdav-volume:
+    maildata:
+    mailstate:
     piwik-database-volume:
