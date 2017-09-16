@@ -136,6 +136,29 @@ services:
             - MYSQL_ROOT_PASSWORD=${DCP_ENV_PIWIK_MYSQL_PASSWD}
         env_file: prod.env
 
+    poste-io:
+        image: analogic/poste.io
+        container_name: poste-io
+        ports:
+            - "25:25"
+            - "110:110"
+            - "143:143"
+            - "465:465"
+            - "587:587"
+            - "993:993"
+            - "995:995"
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - poste-io-database-volume:/data
+        environment:
+            - HTTPS=OFF
+            - VIRTUAL_HOST=poste-io.${DCP_ENV_DOMAIN}
+            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
+            - LETSENCRYPT_HOST=poste-io.${DCP_ENV_DOMAIN}
+            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
+            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
+        env_file: prod.env
+
     selfoss:
         image: jenserat/selfoss
         container_name: selfoss
@@ -159,6 +182,7 @@ services:
             - gogs-volume:/srv/backup/gogs/:ro
             - keeweb-webdav-volume:/srv/backup/keeweb-webdav/:ro
             - piwik-database-volume:/srv/backup/piwik-database/:ro
+            - poste-io-database-volume:/srv/backup/poste-io/:ro
         environment:
             - DCK_LOCAL_BACKUP_REPO=/srv/backup
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
@@ -167,3 +191,4 @@ volumes:
     gogs-volume:
     keeweb-webdav-volume:
     piwik-database-volume:
+    poste-io-database-volume:
