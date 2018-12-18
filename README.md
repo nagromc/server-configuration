@@ -29,10 +29,11 @@ Self-hosting configuration
 
 ## Development
 
-1. Create the required directories
+1. Create the required directories and files
 
     ```
     mkdir -p nginx-proxy/nginx-proxy-files/{certs,conf.d,dhparam}
+    touch prod.env
     ```
 
 2. Create self-signed certificate
@@ -58,3 +59,5 @@ Self-hosting configuration
     ```
     ./docker-compose-env.sh up --force-recreate --build
     ```
+
+    Note: You may need to change the `DCP_ENV_HOST_IP_ADDR` value in `.env` to match your own Docker configuration.
