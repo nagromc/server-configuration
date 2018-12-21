@@ -84,13 +84,10 @@ services:
             - /sys:/host/sys:ro
         cap_add:
             - SYS_PTRACE
-        environment:
-            - VIRTUAL_HOST=netdata.${DCP_ENV_DOMAIN}
-            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=netdata.${DCP_ENV_DOMAIN}
-            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
+        labels:
+            - "traefik.frontend.rule=Host:netdata.${DCP_ENV_DOMAIN}"
+            - "traefik.port=19999"
 
     piwik:
         image: piwik
