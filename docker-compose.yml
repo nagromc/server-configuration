@@ -89,26 +89,23 @@ services:
             - "traefik.frontend.rule=Host:netdata.${DCP_ENV_DOMAIN}"
             - "traefik.port=19999"
 
-    piwik:
-        image: piwik
-        container_name: piwik
-        environment:
-            - VIRTUAL_HOST=piwik.${DCP_ENV_DOMAIN}
-            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=piwik.${DCP_ENV_DOMAIN}
-            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
+    matomo:
+        image: matomo
+        container_name: matomo
         links:
-            - piwik-database:db
+            - matomo-database:db
         env_file: prod.env
+        labels:
+            - "traefik.frontend.rule=Host:matomo.${DCP_ENV_DOMAIN}"
+            - "traefik.port=80"
 
-    piwik-database:
+    matomo-database:
         image: mysql:5
-        container_name: piwik-database
+        container_name: matomo-database
         volumes:
-            - piwik-database-volume:/var/lib/mysql
+            - matomo-database-volume:/var/lib/mysql
         environment:
-            - MYSQL_ROOT_PASSWORD=${DCP_ENV_PIWIK_MYSQL_PASSWD}
+            - MYSQL_ROOT_PASSWORD=${DCP_ENV_MATOMO_MYSQL_PASSWD}
         env_file: prod.env
 
     selfoss:
@@ -133,7 +130,7 @@ services:
             - ./backup/backup.sh:/etc/periodic/daily/backup:ro
             - gitea-volume:/srv/backup/gitea/:ro
             - keeweb-webdav-volume:/srv/backup/keeweb-webdav/:ro
-            - piwik-database-volume:/srv/backup/piwik-database/:ro
+            - matomo-database-volume:/srv/backup/matomo-database/:ro
         environment:
             - DCK_LOCAL_BACKUP_REPO=/srv/backup
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
@@ -141,4 +138,4 @@ services:
 volumes:
     gitea-volume:
     keeweb-webdav-volume:
-    piwik-database-volume:
+    matomo-database-volume:
