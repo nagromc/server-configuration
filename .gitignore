@@ -2,3 +2,4 @@ keeweb-webdav/user.passwd
 keeweb-webdav/www/
 nginx-proxy/nginx-proxy-files/
 prod.env
+traefik/certs
