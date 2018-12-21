@@ -49,14 +49,14 @@ services:
         labels:
             - "com.github.jrcs.letsencrypt_nginx_proxy_companion.docker_gen"
 
-    gogs:
-        image: gogs/gogs
-        container_name: gogs
+    gitea:
+        image: gitea/gitea
+        container_name: gitea
         ports:
             - "10023:22"
         volumes:
-            - gogs-volume:/data
-            - ${DCP_ENV_GOGS_CONFIG_PATH}:/data/gogs/conf/app.ini
+            - gitea-volume:/data
+            - ${DCP_ENV_GITEA_CONFIG_PATH}:/data/gitea/conf/app.ini
         environment:
             - VIRTUAL_HOST=git.${DCP_ENV_DOMAIN}
             - VIRTUAL_PORT=3000
@@ -156,7 +156,7 @@ services:
         container_name: backup
         volumes:
             - ./backup/backup.sh:/etc/periodic/daily/backup:ro
-            - gogs-volume:/srv/backup/gogs/:ro
+            - gitea-volume:/srv/backup/gitea/:ro
             - keeweb-webdav-volume:/srv/backup/keeweb-webdav/:ro
             - piwik-database-volume:/srv/backup/piwik-database/:ro
         environment:
@@ -164,6 +164,6 @@ services:
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
 
 volumes:
-    gogs-volume:
+    gitea-volume:
     keeweb-webdav-volume:
     piwik-database-volume:
