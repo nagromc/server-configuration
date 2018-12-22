@@ -19,17 +19,19 @@ services:
     traefik:
         image: traefik
         container_name: traefik
-        command: --docker
         ports:
             - "80:80"
             - "10443:443"
+        networks:
+            - web
         volumes:
             - ./traefik/traefik.toml:/etc/traefik/traefik.toml
-            - ./traefik/certs:/etc/ssl/certs:ro
+            - ./traefik/acme.json:/acme.json
             - /var/run/docker.sock:/var/run/docker.sock:ro
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:traefik.${DCP_ENV_DOMAIN}"
-            - "traefik.port=8080"
+            - "traefik.basic.port=8080"
 
     gitea:
         image: gitea/gitea
@@ -81,12 +83,15 @@ services:
     selfoss:
         image: jenserat/selfoss
         container_name: selfoss
+        networks:
+            - web
         volumes:
             - /srv/selfoss:/var/www/html/data
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:rss.${DCP_ENV_DOMAIN}"
-            - "traefik.port=80"
+            - "traefik.basic.port=80"
 
     backup:
         build: ./backup
@@ -101,6 +106,10 @@ services:
         environment:
             - DCK_LOCAL_BACKUP_REPO=/srv/backup
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
+
+networks:
+    web:
+        external: true
 
 volumes:
     gitea-volume:

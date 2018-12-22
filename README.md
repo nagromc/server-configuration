@@ -39,7 +39,7 @@ Self-hosting configuration
 
     ```
     mkdir -p traefik/certs
-    touch prod.env
+    touch prod.env traefik/acme.json
     ```
 
 2. Create self-signed certificate
