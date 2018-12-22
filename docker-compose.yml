@@ -44,36 +44,6 @@ services:
             - "traefik.frontend.rule=Host:git.${DCP_ENV_DOMAIN}"
             - "traefik.port=3000"
 
-    keeweb:
-        image: antelle/keeweb
-        container_name: keeweb
-        volumes:
-            - ${DCP_ENV_KEEWEB_CONFIG_PATH}:/keeweb/config.json:ro
-        environment:
-            - VIRTUAL_HOST=keeweb.${DCP_ENV_DOMAIN}
-            - VIRTUAL_PORT=443
-            - VIRTUAL_PROTO=https
-            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=keeweb.${DCP_ENV_DOMAIN}
-            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
-        env_file: prod.env
-
-    keeweb-webdav:
-        build: ./keeweb-webdav
-        container_name: keeweb-webdav
-        volumes:
-            - ./keeweb-webdav/httpd-dav.conf:/usr/local/apache2/conf/extra/httpd-dav.conf:ro
-            - ./keeweb-webdav/user.passwd:/var/local/apache2/user.passwd:ro
-            - keeweb-webdav-volume:/var/www/${DCP_ENV_KEEWEB_DB_NAME}:rw
-        environment:
-            - VIRTUAL_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
-            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=webdav.keeweb.${DCP_ENV_DOMAIN}
-            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
-        env_file: prod.env
-
     netdata:
         image: firehol/netdata
         container_name: netdata
