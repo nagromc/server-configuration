@@ -113,13 +113,10 @@ services:
         container_name: selfoss
         volumes:
             - /srv/selfoss:/var/www/html/data
-        environment:
-            - VIRTUAL_HOST=rss.${DCP_ENV_DOMAIN}
-            - HTTPS_METHOD=${DCP_ENV_HTTPS_METHOD}
-            - LETSENCRYPT_HOST=rss.${DCP_ENV_DOMAIN}
-            - LETSENCRYPT_EMAIL=${DCP_ENV_LETSENCRYPT_EMAIL}
-            - LETSENCRYPT_TEST=${DCP_ENV_LETSENCRYPT_TEST}
         env_file: prod.env
+        labels:
+            - "traefik.frontend.rule=Host:rss.${DCP_ENV_DOMAIN}"
+            - "traefik.port=80"
 
     backup:
         build: ./backup
