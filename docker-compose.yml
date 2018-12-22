@@ -54,6 +54,8 @@ services:
         container_name: netdata
         ports:
             - "19999:19999"
+        networks:
+            - web
         volumes:
             - /proc:/host/proc:ro
             - /sys:/host/sys:ro
@@ -61,6 +63,7 @@ services:
             - SYS_PTRACE
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:netdata.${DCP_ENV_DOMAIN}"
             - "traefik.port=19999"
 
