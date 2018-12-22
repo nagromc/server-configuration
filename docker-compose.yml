@@ -22,7 +22,7 @@ services:
         command: --docker
         ports:
             - "80:80"
-            - "443:443"
+            - "10443:443"
         volumes:
             - ./traefik/traefik.toml:/etc/traefik/traefik.toml
             - ./traefik/certs:/etc/ssl/certs:ro
