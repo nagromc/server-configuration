@@ -72,8 +72,11 @@ services:
         container_name: matomo
         links:
             - matomo-database:db
+        networks:
+            - web
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:matomo.${DCP_ENV_DOMAIN}"
             - "traefik.port=80"
 
