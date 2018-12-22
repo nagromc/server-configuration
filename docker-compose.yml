@@ -19,28 +19,33 @@ services:
     traefik:
         image: traefik
         container_name: traefik
-        command: --docker
         ports:
             - "80:80"
             - "10443:443"
+        networks:
+            - web
         volumes:
             - ./traefik/traefik.toml:/etc/traefik/traefik.toml
-            - ./traefik/certs:/etc/ssl/certs:ro
+            - ./traefik/acme.json:/acme.json
             - /var/run/docker.sock:/var/run/docker.sock:ro
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:traefik.${DCP_ENV_DOMAIN}"
-            - "traefik.port=8080"
+            - "traefik.basic.port=8080"
 
     gitea:
         image: gitea/gitea
         container_name: gitea
         ports:
             - "22:22"
+        networks:
+            - web
         volumes:
             - gitea-volume:/data
             - ${DCP_ENV_GITEA_CONFIG_PATH}:/data/gitea/conf/app.ini
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:git.${DCP_ENV_DOMAIN}"
             - "traefik.port=3000"
 
@@ -49,6 +54,8 @@ services:
         container_name: netdata
         ports:
             - "19999:19999"
+        networks:
+            - web
         volumes:
             - /proc:/host/proc:ro
             - /sys:/host/sys:ro
@@ -56,6 +63,7 @@ services:
             - SYS_PTRACE
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:netdata.${DCP_ENV_DOMAIN}"
             - "traefik.port=19999"
 
@@ -64,8 +72,11 @@ services:
         container_name: matomo
         links:
             - matomo-database:db
+        networks:
+            - web
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:matomo.${DCP_ENV_DOMAIN}"
             - "traefik.port=80"
 
@@ -81,12 +92,15 @@ services:
     selfoss:
         image: jenserat/selfoss
         container_name: selfoss
+        networks:
+            - web
         volumes:
             - /srv/selfoss:/var/www/html/data
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:rss.${DCP_ENV_DOMAIN}"
-            - "traefik.port=80"
+            - "traefik.basic.port=80"
 
     backup:
         build: ./backup
@@ -101,6 +115,10 @@ services:
         environment:
             - DCK_LOCAL_BACKUP_REPO=/srv/backup
             - DCK_REMOTE_BACKUP_REPO=${DCP_ENV_REMOTE_BACKUP_REPO}
+
+networks:
+    web:
+        external: true
 
 volumes:
     gitea-volume:

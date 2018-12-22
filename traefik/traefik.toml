@@ -38,9 +38,6 @@ defaultEntryPoints = ["http", "https"]
     [entryPoints.https]
     address = ":443"
     [entryPoints.https.tls]
-        [[entryPoints.https.tls.certificates]]
-        certFile = "/etc/ssl/certs/localhost.crt"
-        keyFile = "/etc/ssl/certs/localhost.key"
 
 ################################################################
 # Traefik logs configuration
@@ -150,11 +147,20 @@ defaultEntryPoints = ["http", "https"]
 # Optional
 # Default: ""
 #
-# domain = "docker.localhost"
+domain = "localhost"
 
 # Expose containers by default in traefik
 #
 # Optional
 # Default: true
 #
-# exposedByDefault = true
+exposedByDefault = false
+
+[acme]
+email = "email@example.org"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+[acme.httpChallenge]
+entryPoint = "http"
