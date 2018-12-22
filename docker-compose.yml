@@ -38,11 +38,14 @@ services:
         container_name: gitea
         ports:
             - "22:22"
+        networks:
+            - web
         volumes:
             - gitea-volume:/data
             - ${DCP_ENV_GITEA_CONFIG_PATH}:/data/gitea/conf/app.ini
         env_file: prod.env
         labels:
+            - "traefik.enable=true"
             - "traefik.frontend.rule=Host:git.${DCP_ENV_DOMAIN}"
             - "traefik.port=3000"
 
