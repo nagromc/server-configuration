@@ -11,7 +11,7 @@ services:
             - SSH_HOST_FORWARD=dockerhost
             - SSH_PORT_FORWARD=${DCP_ENV_HOST_SSHD_PORT}
             - SSL_HOST_FORWARD=dockerhost
-            - SSL_PORT_FORWARD=${DCP_ENV_NGINX_HTTPS_PORT}
+            - SSL_PORT_FORWARD=${DCP_ENV_TRAEFIK_HTTPS_PORT}
         extra_hosts:
             - "dockerhost:${DCP_ENV_HOST_IP_ADDR}"
         env_file: prod.env
@@ -21,7 +21,7 @@ services:
         container_name: traefik
         ports:
             - "80:80"
-            - "10443:443"
+            - "${DCP_ENV_TRAEFIK_HTTPS_PORT}:443"
         networks:
             - web
         volumes:
