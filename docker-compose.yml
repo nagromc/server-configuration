@@ -25,7 +25,7 @@ services:
         networks:
             - web
         volumes:
-            - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+            - ${DCP_ENV_TRAEFIK_CONFIG_PATH}:/etc/traefik/traefik.toml
             - ./traefik/acme.json:/acme.json
             - /var/run/docker.sock:/var/run/docker.sock:ro
         labels:

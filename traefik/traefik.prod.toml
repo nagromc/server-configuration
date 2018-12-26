@@ -147,7 +147,7 @@ defaultEntryPoints = ["http", "https"]
 # Optional
 # Default: ""
 #
-domain = "localhost"
+domain = "docker.ploki.fr"
 
 # Expose containers by default in traefik
 #
@@ -155,3 +155,13 @@ domain = "localhost"
 # Default: true
 #
 exposedByDefault = false
+
+[acme]
+email = "sub+letsencrypt@morgan.ploki.fr"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+# Uncomment to switch to stage root CA (for tests purposes)
+# caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+[acme.httpChallenge]
+entryPoint = "http"
