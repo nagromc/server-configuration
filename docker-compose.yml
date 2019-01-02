@@ -49,9 +49,9 @@ services:
             - "traefik.frontend.rule=Host:git.${DCP_ENV_DOMAIN}"
             - "traefik.port=3000"
 
-    netdata:
+    monitoring:
         image: firehol/netdata
-        container_name: netdata
+        container_name: monitoring
         ports:
             - "19999:19999"
         networks:
@@ -64,12 +64,12 @@ services:
         env_file: prod.env
         labels:
             - "traefik.enable=true"
-            - "traefik.frontend.rule=Host:netdata.${DCP_ENV_DOMAIN}"
+            - "traefik.frontend.rule=Host:monitoring.${DCP_ENV_DOMAIN}"
             - "traefik.port=19999"
 
-    matomo:
+    analytics:
         image: matomo
-        container_name: matomo
+        container_name: analytics
         links:
             - matomo-database:db
         networks:
@@ -77,7 +77,7 @@ services:
         env_file: prod.env
         labels:
             - "traefik.enable=true"
-            - "traefik.frontend.rule=Host:matomo.${DCP_ENV_DOMAIN}"
+            - "traefik.frontend.rule=Host:analytics.${DCP_ENV_DOMAIN}"
             - "traefik.port=80"
 
     matomo-database:

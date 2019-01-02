@@ -39,6 +39,6 @@ Self-hosting configuration
 
 3. Reach any of the defined URLs
     - http://git.localhost or https://git.localhost
-    - http://netdata.localhost or https://netdata.localhost
+    - http://monitoring.localhost or https://monitoring.localhost
     - http://keeweb.localhost or https://keeweb.localhost
     - etc.
