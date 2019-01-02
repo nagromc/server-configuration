@@ -28,6 +28,8 @@ services:
             - ${DCP_ENV_TRAEFIK_CONFIG_PATH}:/etc/traefik/traefik.toml
             - ./traefik/acme.json:/acme.json
             - /var/run/docker.sock:/var/run/docker.sock:ro
+        environment:
+            - GANDIV5_API_KEY=${DCP_ENV_GANDIV5_API_KEY}
         labels:
             - "traefik.enable=true"
             - "traefik.frontend.rule=Host:traefik.${DCP_ENV_DOMAIN}"
